@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Metodologica</title>
+    <link rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+        <div>
+      <nav class="navbar">
+        <a href="#" class="logo">Estação Metorologica</a>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="#">Início</a></li>
+          <li id="drop"  class="dropdown">
+            <a href="#" onclick="toggleCity()">Cidade</a>
+            <div id="dropcont" class="dropdown-content">
+              <a href="#"><input id="inp" type="text"></a>
+            </div>
+          </li>
+        </ul>
+        <span class="menu-icon" onclick="toggleMenu()">☰</span>
+      </nav>
+    </div>
+    <div class="estacao">
+        <div class="box">
+            <p>Cidade: <span id="cidade">--</span></p>
+        </div>
+        <div class="box1">
+            <p>Clima: <span id="clima">--</span></p>
+        </div>
+        <div class="box3">
+            <p>Temperatura: <span id="temperatura">--</span></p>
+            <p>Pressão: <span id="pressao">--</span></p>
+            <p>Umidade: <span id="umidade">--</span></p>
+        </div>    
+    </div>
+      <script src="script.js">
+ 
+      </script>
+    </body>
+  </html>
+  </body>
+</html>
