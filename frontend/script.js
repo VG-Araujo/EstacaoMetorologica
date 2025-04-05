@@ -30,7 +30,9 @@ async function cidade() {
       return;
     }
 
-    const response = await fetch(`http://localhost:3030/busca/${value}`);
+    const response = await fetch(
+      `https://estacaometorologica.onrender.com/busca/${value}`
+    );
 
     if (!response.ok) {
       throw new Error("Cidade não encontrada");
@@ -54,7 +56,9 @@ async function DadosEsp() {
     const temperatura = document.getElementById("temperatura");
     const umidade = document.getElementById("umidade");
     const pressao = document.getElementById("pressao");
-    const response = await fetch("http://localhost:3030/dados/esp");
+    const response = await fetch(
+      "https://estacaometorologica.onrender.com/dados/esp"
+    );
     if (!response.ok) throw new Error("dados não encontrados");
 
     const dados = await response.json();
