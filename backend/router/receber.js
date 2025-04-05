@@ -1,7 +1,7 @@
 const express = require("express");
 const Router = express.Router();
 const axios = require("axios");
-require("dotenv").config();
+require("dotenv").config({ path: __dirname + "/../../.env" });
 const apikey = process.env.KEY;
 
 Router.get("/busca/:cidade", async (req, res) => {
@@ -19,26 +19,13 @@ Router.get("/busca/:cidade", async (req, res) => {
         },
       }
     );
-    // console.log(response.data);
+    console.log(response.data);
     res.status(200).json(response.data);
   } catch (error) {
     console.log(error);
     res
       .status(500)
       .json({ msg: "Error ao receber dados da api", error: error });
-  }
-});
-
-Router.post("/busca/esp", async (res, req) => {
-  try {
-    const { temperatura, umidade, pressao } = await req.body;
-
-    res.status(200).json({ msg: "Dados postados com sucesso" });
-  } catch (error) {
-    console.log(error);
-    res
-      .status(500)
-      .json({ msg: "Error ao receber dados do esp", error: error });
   }
 });
 
