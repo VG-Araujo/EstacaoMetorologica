@@ -2,10 +2,12 @@ const inp = document.getElementById("inp");
 const dropCont = document.getElementById("dropcont");
 //Adicionar um mecanismo de busca de cidades com autocomplete
 
+//Função para abrir navbar
 function toggleMenu() {
   const estacao = document.getElementsByClassName("estacao")[0];
   let navLinks = document.getElementById("navLinks");
   navLinks.classList.toggle("show");
+  //Garantindo que o navbar não oculte parte da estação
   if (navLinks.classList.contains("show")) {
     estacao.style.marginTop = "160px";
   } else {
@@ -13,10 +15,12 @@ function toggleMenu() {
   }
 }
 
+//Função para abrir o input para buscar cidades
 function toggleCity() {
   dropCont.classList.toggle("show1");
 }
 
+//Buscar dados da API
 async function cidade() {
   try {
     const cidade = document.getElementById("cidade");
@@ -29,10 +33,8 @@ async function cidade() {
       inp.value = "";
       return;
     }
-
-    const response = await fetch(
-      `https://estacaometorologica.onrender.com/busca/${value}`
-    );
+    //IP onde se encontra a rota para buscar dados
+    const response = await fetch(`https://exemplo.com.br/busca/${value}`);
 
     if (!response.ok) {
       throw new Error("Cidade não encontrada");
@@ -51,14 +53,14 @@ async function cidade() {
   }
 }
 
+//Buscar dados recebidos do ESP
 async function DadosEsp() {
   try {
     const temperatura = document.getElementById("temperatura");
     const umidade = document.getElementById("umidade");
     const pressao = document.getElementById("pressao");
-    const response = await fetch(
-      "https://estacaometorologica.onrender.com/dados/esp"
-    );
+    //IP para rota de buscar dados do ESP
+    const response = await fetch("https://exemplo.com.br/dados/esp");
     if (!response.ok) throw new Error("dados não encontrados");
 
     const dados = await response.json();
@@ -69,9 +71,12 @@ async function DadosEsp() {
     console.log(error);
   }
 }
+//Chamar os dados do ESP logo quando entrar
 DadosEsp();
-setInterval(DadosEsp, 10000);
+//Rechamar os dados a cada 1 minuto
+setInterval(DadosEsp, 60000);
 
+//Chamar a função cidade quando digitar uma cidade no input e apertar ENTER
 document.addEventListener("keydown", (e) => {
   if (dropCont.classList.contains("show1") && e.key === "Enter") {
     e.preventDefault();

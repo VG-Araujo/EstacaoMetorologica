@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="style.css" />
     </head> 
     <body>
+      <!-- navbar para navegação -->
         <div>
       <nav class="navbar">
         <a href="#" class="logo">Estação Metorologica</a>
@@ -15,6 +16,7 @@
           <li id="drop"  class="dropdown">
             <a href="#" onclick="toggleCity()">Cidade</a>
             <div id="dropcont" class="dropdown-content">
+              <!-- Input para pegar dados da cidade com a API e comparar com o do ESP -->
               <a href="#"><input id="inp" type="text" placeholder ="Digite uma cidade"></a>
             </div>
           </li>
@@ -22,6 +24,7 @@
         <span class="menu-icon" onclick="toggleMenu()">☰</span>
       </nav>
     </div>
+    <!-- Lugar onde vai ficar os dados -->
     <div class="estacao">
         <div class="box">
             <p>Cidade: <span id="cidade">--</span></p>
@@ -29,11 +32,13 @@
         <div class="box1">
             <p>Clima: <span id="clima">--</span></p>
         </div>
+        <!-- Dados recebidos do ESP -->
         <div class="box3">
             <p>Temperatura: <span id="temperatura">--</span></p>
             <p>Pressão: <span id="pressao">--</span></p>
             <p>Umidade: <span id="umidade">--</span></p>
         </div>   
+        <!-- dados tirados da API para comparação -->
         <div class="box3">
           <p>Temperatura máxima: <span id="temp_max">--</span></p>
           <p>Temperatura mínima: <span id="temp_min">--</span></p>
