@@ -2,7 +2,7 @@ const express = require("express");
 const Router = express.Router();
 const axios = require("axios");
 require("dotenv").config();
-const apikey = process.env.KEY;
+const apikey = "d6d09799b0eec283d6f2309fda6f3474";
 
 Router.get("/busca/:cidade", async (req, res) => {
   try {
