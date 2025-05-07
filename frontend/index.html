@@ -4,13 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Metodologica</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="style.css" />
     </head> 
     <body>
       <!-- navbar para navegação -->
         <div>
       <nav class="navbar">
-        <a href="#" class="logo">Estação Metorologica</a>
+        <a href="#" class="logo">Controle de Clima</a>
         <ul class="nav-links" id="navLinks">
           <li><a href="#">Início</a></li>
           <li id="drop"  class="dropdown">
@@ -44,6 +45,11 @@
           <p>Temperatura mínima: <span id="temp_min">--</span></p>
         </div> 
     </div>
+    <div style="width: 80%; margin: auto;">
+      <canvas id="graficoComparativo"></canvas>
+    </div>    
+    <p id="grafico-status">Aguardando dados para gerar gráfico...</p>
+
       <script src="script.js">
  
       </script>

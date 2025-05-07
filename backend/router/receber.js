@@ -22,6 +22,7 @@ Router.get("/busca/:cidade", async (req, res) => {
     console.log(response.data);
     res.status(200).json(response.data);
   } catch (error) {
+    console.log(process.env.KEY);
     console.log(error);
     res
       .status(500)
