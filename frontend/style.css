@@ -120,6 +120,10 @@ body {
   font-size: 14px;
 }
 
+#graficoComparativo {
+  background-color: white;
+}
+
 /* MEDIA QUERY: MENU RESPONSIVO */
 @media (max-width: 2750px) {
   .nav-links {
