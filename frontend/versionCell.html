@@ -96,7 +96,7 @@ body {
   display: flex;
   width: 100%;
   height: 300px;
-  margin-top: 100px;
+  margin-top: 140px;
   flex-direction: column;
   gap: 10px;
   justify-content: center;
@@ -202,6 +202,7 @@ h2{
         <a href="#" class="logo">Controle de Clima</a>
         <ul class="nav-links" id="navLinks">
           <li><a href="#">Início</a></li>
+          <li id="fan"><a href="#">Fan</a></li>
           <li id="drop"  class="dropdown">
             <a href="#" onclick="toggleCity()">Cidade</a>
             <div id="dropcont" class="dropdown-content">
@@ -227,6 +228,7 @@ h2{
             <p>Temperatura: <span id="temperatura">--</span></p>
             <p>Pressão: <span id="pressao">--</span></p>
             <p>Umidade: <span id="umidade">--</span></p>
+            <p>Ventilador: <span id="ventilador">--</span></p>
         </div>   
         <!-- dados tirados da API para comparação -->
         <div class="box3">
@@ -308,9 +310,9 @@ function toggleMenu() {
   navLinks.classList.toggle("show");
   //Garantindo que o navbar não oculte parte da estação
   if (navLinks.classList.contains("show")) {
-    estacao.style.marginTop = "180px";
+    estacao.style.marginTop = "225px";
   } else {
-    estacao.style.marginTop = "100px";
+    estacao.style.marginTop = "140px";
   }
 }
 
@@ -318,6 +320,37 @@ function toggleMenu() {
 function toggleCity() {
   dropCont.classList.toggle("show1");
 }
+//ligar ou desligar o ventilador
+const ventil = document.getElementById("fan");
+ventil.addEventListener("click", ventilador)
+async function ventilador() {
+  try {
+    const val = prompt("Gostaria de ligar ou desligar o ventilador?");
+
+    if (val !== "Ligado" && val !== "Desligar") {
+      alert("Escreva 'Ligado' ou 'Desligar'");
+      return; // evita continuar com valor inválido
+    }
+
+    const response = await fetch(
+      "https://estacaometorologica.onrender.com/dados/esp",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          fan: val
+        })
+      }
+    );
+
+
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 
 //Buscar dados da API
 async function cidade() {
@@ -377,6 +410,7 @@ async function DadosEsp() {
     const temperatura = document.getElementById("temperatura");
     const umidade = document.getElementById("umidade");
     const pressao = document.getElementById("pressao");
+    const fan = document.getElementById("ventilador")
 
     const response = await fetch(
       "https://estacaometorologica.onrender.com/dados/esp"
@@ -388,10 +422,12 @@ async function DadosEsp() {
     const umidESP = parseFloat(dados.umidade);
     const preESP = parseFloat(dados.pressao);
     const espPre = preESP / 10;
+    const status = dados.fan
 
     temperatura.innerHTML = `${tempESP}℃` || "--";
     umidade.innerHTML = `${umidESP}%` || "--";
     pressao.innerHTML = `${preESP}hPa` || "--";
+    fan.innerHTML = `${status}` || "--";
 
     if (temperaturaCidade !== null && umidCit !== null && PreCity !== null) {
       criarOuAtualizarGrafico(
