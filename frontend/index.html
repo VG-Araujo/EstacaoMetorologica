@@ -35,22 +35,24 @@
         </div>
         <!-- Dados recebidos do ESP -->
         <div class="box3">
+          <h2>Dados do ESP32</h2>
             <p>Temperatura: <span id="temperatura">--</span></p>
             <p>Pressão: <span id="pressao">--</span></p>
             <p>Umidade: <span id="umidade">--</span></p>
         </div>   
         <!-- dados tirados da API para comparação -->
         <div class="box3">
+          <h2>Dados da cidade</h2>
           <p>Temperatura máxima: <span id="temp_max">--</span></p>
           <p>Temperatura mínima: <span id="temp_min">--</span></p>
         </div> 
     </div>
-    <div id="grafic" style="width: 80%; margin: 50px auto 0 auto; background-color: white; padding: 20px; border-radius: 8px;">
+    <div style="position: relative; width: 100%; height: 100vh; margin-top: 100px;">
+    <div id="grafic" style="width: 800px;  background-color: white; position: absolute; left: 30px; border-radius: 8px;">
       <canvas id="graficoComparativo"></canvas>
-    </div>  
-
+    </div>
+  </div>  
       <script src="script.js">
- 
       </script>
     </body>
   </html>

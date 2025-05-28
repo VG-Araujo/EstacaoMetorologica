@@ -5,12 +5,13 @@ let DadosEsp = {
   temperatura: null,
   umidade: null,
   pressao: null,
+  fan: null,
 };
 
 Router.post("/dados/esp", async (req, res) => {
   try {
-    const { temperatura, umidade, pressao } = await req.body;
-    DadosEsp = { temperatura, umidade, pressao };
+    const { temperatura, umidade, pressao, fan } = await req.body;
+    DadosEsp = { temperatura, umidade, pressao, fan };
     res.status(200).json({ msg: "Dados postados com sucesso" });
   } catch (error) {
     console.log(error);

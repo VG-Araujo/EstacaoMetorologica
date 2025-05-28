@@ -7,6 +7,7 @@
 body {
   font-family: Arial, sans-serif;
   background-color: #ccc;
+  height: 100%;
 }
 
 /* NAVBAR GERAL */
@@ -100,13 +101,17 @@ body {
   max-width: 300px;
 }
 
+h2{
+  font-size: 50px;
+}
+
 .box1 {
-  font-size: 20px;
+  font-size: 38px;
   font-weight: bold;
 }
 
 .box3 {
-  font-size: 50px;
+  font-size: 30px;
   border: 4px double black;
   border-radius: 5%;
 }

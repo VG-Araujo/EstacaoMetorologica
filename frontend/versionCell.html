@@ -1,4 +1,249 @@
-const inp = document.getElementById("inp");
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Metodologica</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #ccc;
+  height: 100%;
+}
+
+/* NAVBAR GERAL */
+.navbar {
+  background-color: #3498db;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+.navbar .logo {
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+}
+
+.nav-links li {
+  margin: 0 15px;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+  padding: 8px;
+}
+
+.nav-links a:hover {
+  background-color: #2980b9;
+  border-radius: 5px;
+}
+
+.menu-icon {
+  display: none;
+  font-size: 24px;
+  color: white;
+  cursor: pointer;
+}
+
+.dropdown {
+  position: relative;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: rgba(5, 67, 95, 0.445);
+  min-width: 150px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  top: -10px;
+}
+
+.dropdown-content a {
+  color: black;
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+}
+
+.dropdown-content a:hover {
+  background-color: #f1f1f1;
+}
+
+.show1 {
+  display: block !important;
+}
+
+.estacao {
+  display: flex;
+  width: 100%;
+  height: 300px;
+  margin-top: 100px;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+}
+
+.box {
+  font-size: 30px;
+  border: 3px solid black;
+  min-width: 220px;
+  max-width: 300px;
+}
+
+h2{
+  font-size: 50px;
+}
+
+.box1 {
+  font-size: 38px;
+  font-weight: bold;
+}
+
+.box3 {
+  font-size: 30px;
+  border: 4px double black;
+  border-radius: 5%;
+}
+
+#inp {
+  width: 90%;
+  padding: 6px;
+  border-radius: 4px;
+  border: none;
+  outline: none;
+  font-size: 14px;
+}
+
+#graficoComparativo {
+  background-color: white;
+}
+
+/* MEDIA QUERY: MENU RESPONSIVO */
+@media (max-width: 2750px) {
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    background-color: #3498db;
+    width: 100%;
+    text-align: center;
+  }
+
+  .nav-links.show {
+    display: flex;
+  }
+
+  .menu-icon {
+    display: block;
+  }
+
+  .nav-links li {
+    margin: 10px 0;
+  }
+}
+
+/* TELAS MAIORES */
+@media (min-width: 2000px) {
+  .nav-links {
+    display: flex !important;
+    flex-direction: row;
+    position: static;
+    background-color: transparent;
+    width: auto;
+    text-align: left;
+  }
+
+  .menu-icon {
+    display: none;
+  }
+}
+
+@media (max-width: 1200px) {
+  #grafic {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+  }
+
+  #graficoComparativo {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 400px !important;
+    aspect-ratio: 16 / 9; /* mantém uma proporção de tela padrão */
+  }
+}
+    </style>
+    </head> 
+    <body>
+      <!-- navbar para navegação -->
+        <div>
+      <nav class="navbar">
+        <a href="#" class="logo">Controle de Clima</a>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="#">Início</a></li>
+          <li id="drop"  class="dropdown">
+            <a href="#" onclick="toggleCity()">Cidade</a>
+            <div id="dropcont" class="dropdown-content">
+              <!-- Input para pegar dados da cidade com a API e comparar com o do ESP -->
+              <a href="#"><input id="inp" type="text" placeholder ="Digite uma cidade"></a>
+            </div>
+          </li>
+        </ul>
+        <span class="menu-icon" onclick="toggleMenu()">☰</span>
+      </nav>
+    </div>
+    <!-- Lugar onde vai ficar os dados -->
+    <div class="estacao">
+        <div class="box">
+            <p>Cidade: <span id="cidade">--</span></p>
+        </div>
+        <div class="box1">
+            <p>Clima: <span id="clima">--</span></p>
+        </div>
+        <!-- Dados recebidos do ESP -->
+        <div class="box3">
+          <h2>Dados do ESP32</h2>
+            <p>Temperatura: <span id="temperatura">--</span></p>
+            <p>Pressão: <span id="pressao">--</span></p>
+            <p>Umidade: <span id="umidade">--</span></p>
+        </div>   
+        <!-- dados tirados da API para comparação -->
+        <div class="box3">
+          <h2>Dados da cidade</h2>
+          <p>Temperatura máxima: <span id="temp_max">--</span></p>
+          <p>Temperatura mínima: <span id="temp_min">--</span></p>
+          <p>Umidade: <span id="humid">--</span></p>
+          <p>Pressão: <span id="preq">--</span></p>
+        </div> 
+    </div>
+    <div style="position: relative; width: 100%; height: 100vh; margin-top: 100px;">
+    <div id="grafic" style="width: 800px;  background-color: white; position: absolute; left: 2px; border-radius: 8px;">
+      <canvas id="graficoComparativo"></canvas>
+    </div>
+  </div>  
+      <script>
+        const inp = document.getElementById("inp");
 const dropCont = document.getElementById("dropcont");
 let temperaturaCidade = null;
 let umidCit = null;
@@ -63,9 +308,9 @@ function toggleMenu() {
   navLinks.classList.toggle("show");
   //Garantindo que o navbar não oculte parte da estação
   if (navLinks.classList.contains("show")) {
-    estacao.style.marginTop = "135px";
+    estacao.style.marginTop = "180px";
   } else {
-    estacao.style.marginTop = "80px";
+    estacao.style.marginTop = "100px";
   }
 }
 
@@ -82,6 +327,8 @@ async function cidade() {
     const temp_max = document.getElementById("temp_max");
     const temp_min = document.getElementById("temp_min");
     const value = inp.value.trim();
+    const umiri = document.getElementById("humid")
+    const preq = document.getElementById("preq") //pressão da cidade
 
     if (!value || !isNaN(value)) {
       alert("Digite um nome de cidade válido.");
@@ -106,7 +353,9 @@ async function cidade() {
     temperaturaCidade = dados.main.temp;
     umidCit = dados.main.humidity;
     PreCity = dados.main.pressure;
-    CityPre = PreCity / 100;
+    CityPre = PreCity / 10;
+    umiri.innerHTML = `${dados.main.humidity}%`;
+    preq.innerHTML = `${dados.main.pressure}hPA`;
 
     // Perguntar se deseja salvar como padrão
     if (confirm(`Deseja salvar "${dados.name}" como cidade padrão?`)) {
@@ -138,11 +387,11 @@ async function DadosEsp() {
     const tempESP = parseFloat(dados.temperatura);
     const umidESP = parseFloat(dados.umidade);
     const preESP = parseFloat(dados.pressao);
-    const espPre = preESP / 100;
+    const espPre = preESP / 10;
 
     temperatura.innerHTML = `${tempESP}℃` || "--";
     umidade.innerHTML = `${umidESP}%` || "--";
-    pressao.innerHTML = `${preESP}bPa` || "--";
+    pressao.innerHTML = `${preESP}hPa` || "--";
 
     if (temperaturaCidade !== null && umidCit !== null && PreCity !== null) {
       criarOuAtualizarGrafico(
@@ -172,10 +421,10 @@ function criarOuAtualizarGrafico(
   // Se o gráfico já existir, atualiza os dados
   if (chart) {
     chart.data.datasets[0].data.push(tempESP);
-    chart.data.datasets[1].data.push(tempCidade);
-    chart.data.datasets[2].data.push(UmidESP);
-    chart.data.datasets[3].data.push(UmidCity);
-    chart.data.datasets[4].data.push(PreEsp);
+    chart.data.datasets[1].data.push(UmidESP);
+    chart.data.datasets[2].data.push(PreEsp);
+    chart.data.datasets[3].data.push(tempCidade);
+    chart.data.datasets[4].data.push(UmidCity);
     chart.data.datasets[5].data.push(PresCity);
     chart.data.labels.push(new Date().toLocaleTimeString());
 
@@ -221,7 +470,7 @@ function criarOuAtualizarGrafico(
 }
 
 //Rechamar os dados a cada 1 minuto
-setInterval(DadosEsp, 60000);
+setInterval(DadosEsp, 10000);
 
 //Chamar a função cidade quando digitar uma cidade no input e apertar ENTER
 document.addEventListener("keydown", (e) => {
@@ -239,3 +488,9 @@ window.onload = async function () {
     await DadosEsp(); // só depois busca ESP
   }
 };
+
+      </script>
+    </body>
+  </html>
+  </body>
+</html>
